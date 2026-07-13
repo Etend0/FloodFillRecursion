@@ -56,21 +56,50 @@ namespace FloodFillRecursion.Models
             for (int shapes = 0; shapes < NumShapes; shapes++)
             {
                 // Generate the row and col for the
-                // top left corner of the square
+                // top left corner of the triangle
                 row = random.Next(0, Size - shapeSize + 1);
                 col = random.Next(0, Size - shapeSize + 1);
-                for (int offset = 0; offset < shapeSize; offset++)
+
+                for (int i = 0; i < shapeSize; i++)
                 {
-                    // Top Wall
-                    Grid[row, col + offset].Contents = "W";
-                    // Bottom Wall
-                    Grid[row + shapeSize - 1, col + offset].Contents = "W";
-                    // Left Wall
-                    Grid[row + offset, col].Contents = "W";
-                    // Right Wall
-                    Grid[row + offset, col + shapeSize - 1].Contents = "W";
+                    // Calculate the left and right edges of the triangle at this row
+                    int leftCol = col + (shapeSize - 1 - i) / 2;
+                    int rightCol = col + shapeSize - 1 - (shapeSize - 1 - i) / 2;
+
+                    // Left edge wall
+                    Grid[row + i, leftCol].Contents = "W";
+                    // Right edge wall
+                    Grid[row + i, rightCol].Contents = "W";
+
+                    // Close diagonal gaps so flood fill doesn't enter the triangle
+                    if (i < shapeSize - 1)
+                    {
+                        int nextLeftCol = col + (shapeSize - 1 - (i + 1)) / 2;
+                        int nextRightCol = col + shapeSize - 1 - (shapeSize - 1 - (i + 1)) / 2;
+
+                        // Add extra wall to close the diagonal gap
+                        if (nextLeftCol != leftCol)
+                        {
+                            Grid[row + i, nextLeftCol].Contents = "W";
+                        }
+                        // Add extra wall to close the diagonal gap
+                        if (nextRightCol != rightCol)
+                        {
+                            Grid[row + i, nextRightCol].Contents = "W";
+                        }
+                    }
+
+                    // Bottom row, fill in the entire row with walls to make the bottom of the triangle
+                    if (i == shapeSize - 1)
+                    {
+                        for (int c = leftCol; c <= rightCol; c++)
+                        {
+                            Grid[row + i, c].Contents = "W";
+                        }
+                    }
                 }
             }
-        }
+
+        } // End of PlaceShapes method
     }
 }

@@ -119,15 +119,16 @@ static class Utility
         // Print the current cell to the console
         Console.WriteLine($"Filling at {row}, {col} ");
         // Pause the program for sleepCount number of milliseconds
-        Thread.Sleep(sleepCount);
+
 
         // Check if the cell is on the board
         if (row < 0 || row >= board.Size || col < 0 || col >= board.Size)
         {
-            // Print a message indicating the cell is a wall
+            // Print a message indicating the cell is out of bounds
             Console.WriteLine("Out of bounds. Stop");
             // Pause the program for sleepCount number of milliseconds
             Thread.Sleep(sleepCount);
+
             // If the cell is not on the board, end the method
             return board;
         }
@@ -139,15 +140,17 @@ static class Utility
             Console.WriteLine("Hit a wall. Stop");
             // Pause the program for sleepCount number of milliseconds
             Thread.Sleep(sleepCount);
+
             return board;
         }
         // If the cell has already been filled, end the method
         if (board.Grid[row, col].Contents == "F")
         {
-            // Print a message indicating the cell is a wall
+            // Print a message indicating the cell has akready been filled, end the method
             Console.WriteLine("Already filled. Stop");
             // Pause the program for sleepCount number of milliseconds
             Thread.Sleep(sleepCount);
+
             return board;
         }
         // Else, fill the cell
@@ -166,16 +169,16 @@ static class Utility
         PrintBoard(board);
 
         // Print a message indicating the next flood fill direction
-        Console.ForegroundColor = ConsoleColor.Blue;
-        Console.Write("North: ");
-        // Call the flood fill method to the north
-        board = FloodFill(board, row - 1, col);
-
-        // Print a message indicating the next flood fill direction
         Console.ForegroundColor = ConsoleColor.Yellow;
         Console.Write("East: ");
         // Call the flood fill method to the east
         board = FloodFill(board, row, col + 1);
+
+        // Print a message indicating the next flood fill direction
+        Console.ForegroundColor = ConsoleColor.Blue;
+        Console.Write("North: ");
+        // Call the flood fill method to the north
+        board = FloodFill(board, row - 1, col);
 
         // Print a message indicating the next flood fill direction
         Console.ForegroundColor = ConsoleColor.Magenta;
@@ -188,6 +191,30 @@ static class Utility
         Console.Write("West: ");
         // Call the flood fill method to the west
         board = FloodFill(board, row, col - 1);
+
+        // Print a message indicating the next flood fill direction
+        Console.ForegroundColor = ConsoleColor.DarkYellow;
+        Console.Write("NE: ");
+        // Call the flood fill method to the north-east
+        board = FloodFill(board, row - 1, col + 1);
+
+        // Print a message indicating the next flood fill direction
+        Console.ForegroundColor = ConsoleColor.DarkCyan;
+        Console.Write("NW: ");
+        // Call the flood fill method to the north-west
+        board = FloodFill(board, row - 1, col - 1);
+
+        // Print a message indicating the next flood fill direction
+        Console.ForegroundColor = ConsoleColor.DarkMagenta;
+        Console.Write("SE: ");
+        // Call the flood fill method to the south-east
+        board = FloodFill(board, row + 1, col + 1);
+
+        // Print a message indicating the next flood fill direction
+        Console.ForegroundColor = ConsoleColor.DarkGreen;
+        Console.Write("SW: ");
+        // Call the flood fill method to the south-west
+        board = FloodFill(board, row + 1, col - 1);
 
         // Return the board
         return board;
