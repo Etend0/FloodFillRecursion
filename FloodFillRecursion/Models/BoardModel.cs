@@ -4,6 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+/*
+ * Elijah Hodge
+ * CST - 250
+ * 07/12/2026
+ * Flood Fill Recursion
+ * Activity 3
+*/
+
 namespace FloodFillRecursion.Models
 {
     internal class BoardModel

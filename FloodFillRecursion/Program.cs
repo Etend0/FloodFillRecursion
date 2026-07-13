@@ -15,12 +15,23 @@ using FloodFillRecursion.Models;
 // Declare and initialize
 // Create a new BoardModel
 BoardModel board = new BoardModel(20, 3);
+int startRow = -1, startCol = -1;
 
 // Print the board to the console
 Utility.PrintBoard(board);
 
+// Prompt the user for the starting row (1 - 20)
+Console.Write("Enter the row to start the flood fill at: ");
+// Remove 1 from the input to get 0-19 range for now
+startRow = Utility.ReadIntFromConsole() - 1;
+
+// Prompt the user for the starting column (1 - 20)
+Console.Write("Enter the column to start the flood fill at: ");
+// Remove 1 from the input to get 0-19 range for now
+startCol = Utility.ReadIntFromConsole() - 1;
+
 // Call the flood fill method using the board
-board = Utility.FloodFill(board, 0, 0);
+board = Utility.FloodFill(board, startRow, startCol);
 
 // Print the new board
 Utility.PrintBoard(board);
@@ -181,4 +192,24 @@ static class Utility
         // Return the board
         return board;
     } // End of FloodFill method
+
+    /// <summary>
+    /// Read an integer number from the console
+    /// </summary>
+    /// <returns></returns>
+    internal static int ReadIntFromConsole()
+    {
+        // Declare and initialize
+        int num = -1;
+
+        // Check if the current input is valid
+        while (!int.TryParse(Console.ReadLine(), out num))
+        {
+            // If the input is not valid, print an error message and prompt the user again
+            Console.WriteLine("Invalid input. Please enter an integer: ");
+        }
+
+        // Return the integer from the user
+        return num;
+    }
 }
